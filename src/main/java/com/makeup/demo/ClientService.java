@@ -23,7 +23,9 @@ public class ClientService {
     public ClientDto save (ClientDto clientDto){
         return ClientMapper.toDto(clientRepository.save(ClientMapper.toEntity(clientDto)));
     }
-
+    public ClientDto update (ClientDto clientDto){
+        return ClientMapper.toDto(clientRepository.save(ClientMapper.toEntity(clientDto)));
+    }
 
 
 }
