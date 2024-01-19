@@ -22,5 +22,6 @@ public class ClientEntity {
     private String name;
     private String phoneNumber;
     private LocalDateTime selectedDate;
+    private String uniqueCode;
 
 }

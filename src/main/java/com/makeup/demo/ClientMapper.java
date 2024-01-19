@@ -7,6 +7,7 @@ public interface ClientMapper {
                 .name(client.getName())
                 .phoneNumber(client.getPhoneNumber())
                 .selectedDate(client.getSelectedDate())
+                .uniqueCode(client.getUniqueCode())
                 .build();
     }
 
@@ -15,6 +16,7 @@ public interface ClientMapper {
                 .name(clientDto.getName())
                 .phoneNumber(clientDto.getPhoneNumber())
                 .selectedDate(clientDto.getSelectedDate())
+                .uniqueCode(clientDto.getUniqueCode())
                 .build();
     }
 }
