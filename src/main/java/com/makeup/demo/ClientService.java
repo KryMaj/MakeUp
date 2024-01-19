@@ -24,7 +24,17 @@ public class ClientService {
         return ClientMapper.toDto(clientRepository.save(ClientMapper.toEntity(clientDto)));
     }
     public ClientDto update (ClientDto clientDto){
-        return ClientMapper.toDto(clientRepository.save(ClientMapper.toEntity(clientDto)));
+            ClientEntity client = clientRepository.findClientByUniqueCode(clientDto.getUniqueCode());
+            client.setName(clientDto.getName());
+            client.setPhoneNumber(clientDto.getPhoneNumber());
+            client.setSelectedDate(clientDto.getSelectedDate());
+            clientRepository.save(client);
+
+        return ClientMapper.toDto(client);
+    }
+
+    public void delete(){
+
     }
 
 

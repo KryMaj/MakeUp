@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 public interface ClientRepository extends JpaRepository<ClientEntity,Long> {
 
 
+ClientEntity findClientByUniqueCode(String uniqueCode);
+
 }
