@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDateTime;
 
@@ -19,7 +20,7 @@ public class MakeupApplication {
 		System.out.println("hello");
 	}
 
-
+	@Bean
 	public CommandLineRunner demo(){
 		return (args) -> {
 
@@ -34,7 +35,15 @@ public class MakeupApplication {
 			clientService.save(client3);
 			clientService.save(client4);
 
-			System.out.println(clientService.getAllClients());
+			System.out.println(clientService.getAllClients().toString());
+
+
+			ClientDto clientDto = new ClientDto("Anna", "656466", LocalDateTime.now(), client1.getUniqueCode());
+			clientService.update(clientDto);
+
+			clientService.delete(client2.getUniqueCode());
+
+
 		};
 	}
 }
