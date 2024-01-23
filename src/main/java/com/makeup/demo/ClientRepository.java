@@ -9,4 +9,6 @@ public interface ClientRepository extends JpaRepository<ClientEntity,Long> {
 
 ClientEntity findClientByUniqueCode(String uniqueCode);
 
+void deleteClientByUniqueCode(String code);
+
 }
