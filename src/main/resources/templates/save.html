@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Orders</title>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+<form method="post" th:action="@{/client2}" th:object="${clientDto}">
+    <label>
+        Nazwa produktu:
+        <input type="text" th:field="*{name}">
+    </label>
+
+    <label>
+        Ilość:
+        <input type="text" th:field="*{phoneNumber}">
+    </label>
+
+
+    <label>
+        Data:
+        <!-- Dodaj klasę "flatpickr" do pola daty -->
+        <input type="datetime-local" th:field="*{selectedDate}" class="flatpickr">
+    </label>
+
+
+
+    <button type="submit">SEND DATA</button>
+
+    <script>
+        flatpickr('.flatpickr', {
+
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            minDate: "today",
+            maxDate: "01.01.2026",
+        });
+    </script>
+</form>
+</body>
+</html>
