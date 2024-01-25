@@ -25,8 +25,15 @@ public class ClientService {
 
     public ClientDto save (ClientDto clientDto){
 
-        sendSms(clientDto);
-        return ClientMapper.toDto(clientRepository.save(ClientMapper.toEntity(clientDto)));
+        ClientDto clientToSave;
+        if (clientDto.getUniqueCode()==null ){
+            clientToSave = new ClientDto(clientDto.getName(), clientDto.getPhoneNumber(), clientDto.getSelectedDate());
+        } else {
+            clientToSave = clientDto;
+        }
+
+        sendSms(clientToSave);
+        return ClientMapper.toDto(clientRepository.save(ClientMapper.toEntity(clientToSave)));
     }
     public ClientDto update (ClientDto clientDto){
             ClientEntity client = clientRepository.findClientByUniqueCode(clientDto.getUniqueCode());

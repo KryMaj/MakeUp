@@ -3,6 +3,7 @@ package com.makeup.demo;
 import java.util.UUID;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 import java.time.LocalDateTime;
@@ -17,8 +18,16 @@ public class ClientDto {
 
     private String name;
     private String phoneNumber;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime selectedDate;
     private String uniqueCode;
+
+    public ClientDto(String name, String phoneNumber){
+        this.name=name;
+        this.phoneNumber=phoneNumber;
+        this.selectedDate = LocalDateTime.now();
+        this.uniqueCode=generateUniqueCode();
+    }
 
 
     public ClientDto(String name, String phoneNumber, LocalDateTime selectedDate){
@@ -28,6 +37,9 @@ public class ClientDto {
         this.uniqueCode=generateUniqueCode();
 
     }
+
+
+
 
 
     private String generateUniqueCode() {
