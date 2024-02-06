@@ -47,6 +47,29 @@
             padding: 150px 0;
         }
 
+             table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        th {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        tr:hover {
+            background-color: #e9ecef;
+        }
+
         .footer {
             background-color: #343a40;
             color: #ffffff;
@@ -169,6 +192,47 @@
         </div>
     </div>
 </section>
+
+<section id="cash" >
+
+    <div class="container">
+        <h2 class="text-center mb-4">Cennik</h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Usługa</th>
+                <th>Cena</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Makijaż ślubny</td>
+                <td>200 zł</td>
+            </tr>
+            <tr>
+                <td>Makijaż dzienny</td>
+                <td>140 zł</td>
+            </tr>
+            <tr>
+                <td>Makijaż wieczorowy</td>
+                <td>150 zł</td>
+            </tr>
+            <tr>
+                <td>Stylizacja brwi</td>
+                <td>50 zł</td>
+            </tr>
+
+            <tr>
+                <td>Makijaż ślubny - pakiet</td>
+                <td>cena ustalana indywidualnie</td>
+            </tr>
+            </tbody>
+        </table>
+
+</section>
+
+
+
 
 <footer class="py-5 bg-dark">
     <div class="container">
