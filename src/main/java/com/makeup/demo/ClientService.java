@@ -38,6 +38,7 @@ public class ClientService {
             }
 
             sendSms(clientToSave);
+            System.out.println(sendSms(clientToSave));
             return ClientMapper.toDto(clientRepository.save(ClientMapper.toEntity(clientToSave)));
         }
         throw new EntityException(ExceptionMessages.ENTITY_NOT_FOUND.getMessage());
