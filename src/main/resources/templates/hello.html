@@ -1,14 +1,212 @@
-<!DOCTYPE html>
-<html lang="en">
+`<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Welcome Page</title>
-    <link rel="stylesheet" href="/webjars/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="/webjars/bootstrap/5.3.2/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Sylwia Miller MakeUp</title>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 56px;
+        }
+
+        .navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: #ffffff;
+        }
+
+        .navbar-dark .navbar-toggler-icon {
+            background-color: #ffffff;
+        }
+
+        header {
+            background: url('https://e6r6m5i7.rocketcdn.me/wp-content/uploads/2021/08/shutterstock_332182442-1024x683.jpg') center/cover no-repeat;
+            color: #ffffff;
+            text-align: center;
+            padding: 150px 0;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        section {
+            padding: 60px 0;
+        }
+
+        .parallax {
+            background: url('https://e6r6m5i7.rocketcdn.me/wp-content/uploads/2021/08/shutterstock_332182442-1024x683.jpg') center/cover no-repeat;
+            color: #ffffff;
+            text-align: center;
+            padding: 150px 0;
+        }
+
+        .footer {
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 20px 0;
+        }
+
+    </style>
 </head>
 <body>
-<p>Hello from thymeleaf view</p>
-<button class="btn btn-dark">Hello From Bootstrap</button>
 
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+
+        <img th:src="@{/logo.png}" alt="Logo" style="max-height: 40px;">
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">O mnie</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Umów wizytę</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#cash">Cennik</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<header style="background: url('https://e6r6m5i7.rocketcdn.me/wp-content/uploads/2021/08/shutterstock_332182442-1024x683.jpg') center/cover no-repeat; color: #ffffff; text-align: center; padding: 150px 0; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+    <div class="container">
+        <h1>Sylwia Miller MakeUp</h1>
+        <!--        <p class="lead">Twój opis nagłówka może być tutaj.</p>-->
+        <!--        <a class="btn btn-light btn-lg" href="#about">Przewiń w dół</a>-->
+    </div>
+</header>
+
+<section id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div style="text-align: justify;">
+                    <h2 style="text-align: center;">O mnie</h2>
+                    <p>
+
+
+                        W świecie pełnym kolorów, cieni i delikatnych pociągnięć pędzlem, odnajduję moją prawdziwą pasję
+                        – tworzenie makijażu, który podkreśla naturalne piękno każdej osoby. Jestem artystką, która
+                        wierzy, że makijaż to nie tylko kreatywny eksperyment, ale także wyjątkowy sposób na
+                        podkreślenie unikalnej urody każdej jednostki.
+
+                        Moje ręce są moim płótnem, a paleta kolorów jest moim zestawem narzędzi. Z każdym pociągnięciem
+                        pędzla odkrywam nowe możliwości wydobywania indywidualnych cech, podkreślania subtelności i
+                        ukazywania siły wyrazu. Każdy makijaż, jaki tworzę, to unikalna historia, opowiedziana poprzez
+                        kolory, tekstury i proporcje.
+
+                        Nie tylko maluję twarze, lecz układam narrację piękna. Moja pasja tkwi w sztuce, która dodaje
+                        pewności siebie, wydobywa charakterystyczne rysy i wprowadza delikatny akcent do codzienności.
+                        Dla mnie makijaż to nie tylko powierzchowność; to forma wyrazu, która manifestuje się na
+                        zewnątrz, jednocześnie odbijając wewnętrzną pewność siebie.
+
+                        Cieszę się, że mogę dzielić się tą pasją z innymi – podczas sesji makijażowych, warsztatów i
+                        inspirujących spotkań. Każda osoba, którą mam przyjemność malować, to dla mnie nowa przygoda,
+                        nowa możliwość stworzenia czegoś wyjątkowego. W moim świecie makijażu każdy jest piękny, a każdy
+                        makijaż ma moc podkreślenia tej piękności.
+
+                        Dołącz do mnie w podróży odkrywania urody i pewności siebie poprzez sztukę makijażu. Razem
+                        możemy stworzyć niezapomnianą historię piękna, w której każdy detal ma znaczenie, a każde
+                        spojrzenie mówi własną opowieść. Jesteśmy jak pędzle na płótnie życia, dodając kolor i wyraz
+                        naszemu codziennemu doświadczeniu.
+
+                        Makijaż nie jest tylko warstwą kosmetyków. To manifestacja pewności siebie, wyraz
+                        indywidualności i radość z odkrywania piękna w sobie i innych. Cieszę się, że mogę być częścią
+                        tej magicznej podróży, pomagając odkrywać i podkreślać to, co sprawia, że każda osoba jest
+                        wyjątkowa.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section id="contact" class="parallax">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h1 style="color: 	#ffffff;">Umów wizytę</h1>
+
+                <form method="post" th:action="@{/client2}" th:object="${clientDto}">
+                    <label style="color: 	#ffffff;">
+                        Imię i Nazwisko:
+                        <input type="text" th:field="*{name}" placeholder="Wpisz imię i nazwisko" required>
+                    </label>
+
+                    <label style="color: 	#ffffff;">
+                        Numer telefonu:
+                        <input type="text" th:field="*{phoneNumber}" placeholder="Wpisz numer telefonu" pattern="[0-9]{9}" required >
+                    </label>
+
+
+                    <label style="color: 	#ffffff;">
+                        Termin:
+                        <input type="datetime-local" th:field="*{selectedDate}" class="flatpickr" placeholder="Wybierz termin" required>
+                    </label>
+
+                    <button class="btn btn-dark" type="submit">UMÓW</button>
+                    <div  th:if="${info}" class="alert alert-success fixed-top text-center" role="alert" id="infoAlert" >
+                        <p th:text="${info}"></p>
+                    </div>
+                    <div th:if="${error}" class="alert alert-danger fixed-top text-center" role="alert" id="errorAlert">
+                        <p th:text="${error}"></p>
+                    </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Sylwia Miller <span
+                th:text="${#dates.year(#dates.createNow())}"></span></p>
+    </div>
+</footer>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+
+        setTimeout(function() {
+        document.getElementById('errorAlert').style.display = 'none';
+        }, 5000);
+    </script>
+
+<script>
+
+        setTimeout(function() {
+                document.getElementById('infoAlert').style.display = 'none';
+        }, 5000);
+    </script>
+
+<script>
+        flatpickr('.flatpickr', {
+
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            minDate: "today",
+            maxDate: "01.01.2026",
+            hourIncrement: 2,
+            minuteIncrement: 60,
+        });
+
+</script>
 </body>
-</html>
+</html>`
