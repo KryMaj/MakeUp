@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,8 +38,8 @@ public class ClientService {
                 clientToSave = clientDto;
             }
 
-            sendSms(clientToSave);
-            System.out.println(sendSms(clientToSave));
+            sendSmsAboutVisit(clientToSave);
+            System.out.println(sendSmsAboutVisit(clientToSave));
             return ClientMapper.toDto(clientRepository.save(ClientMapper.toEntity(clientToSave)));
         }
         throw new EntityException(ExceptionMessages.ENTITY_NOT_FOUND.getMessage());
@@ -60,9 +61,14 @@ public class ClientService {
 
     }
 
-    private String sendSms(ClientDto clientDto){
+    private String sendSmsAboutVisit(ClientDto clientDto){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return "Twoja wizyta została umowiona na " + clientDto.getSelectedDate().format(formatter) + " Twój numer klienta " + clientDto.getUniqueCode()+ " zachowaj go w celu zmiany danych";
+    }
+
+    private String remindAboutVisit(ClientDto clientDto){
+
+        return "Przypominam o jutrzejszej wizycie, jeżeli nie możesz przyjsc, poinformuj o tym, podając swój indywidualny kod: "+ clientDto.getUniqueCode();
     }
 
     private boolean checkIfTheDateIsAvailable(ClientDto clientDto){
@@ -72,15 +78,13 @@ public class ClientService {
     }
 
     @Scheduled(cron = "0 */1 * * * *") // Uruchamia co 24 godziny (przykładowy okres)
-    public void sprawdzTerminyKlientow() {
-        List<LocalDateTime> klienci = getDates();
+    public void checkClientsDates() {
+        List<ClientEntity> clients = new ArrayList<>(clientRepository.findAll());
 
-        // Iteruj przez wszystkich klientów i sprawdź terminy
-        for (LocalDateTime klient : klienci) {
-            if (czyTerminNastepnegoDnia(klient)) {
-                // Tutaj dodaj logikę lub akcje, które mają być wykonane, jeśli termin jest następnego dnia
-                // Na przykład, wysyłanie powiadomienia, zmiana statusu, itp.
-                System.out.println("Termin klienta "+ " jest jutro!");
+
+        for (ClientEntity client : clients) {
+            if (checkIfTheAppointmentIsTheNextDay(client.getSelectedDate())) {
+                System.out.println(remindAboutVisit(ClientMapper.toDto(client)));
             }
         }
     }
@@ -92,9 +96,7 @@ public class ClientService {
                 .collect(Collectors.toList());
     }
 
-    private boolean czyTerminNastepnegoDnia(LocalDateTime termin) {
-
-
+    private boolean checkIfTheAppointmentIsTheNextDay(LocalDateTime termin) {
         LocalDateTime localDateTime = LocalDateTime.now();
 
         if(localDateTime.getDayOfYear() == termin.minusDays(1).getDayOfYear() &&
@@ -104,6 +106,34 @@ public class ClientService {
         return false;
     }
 
+    private boolean checkIfTheAppointmentDateHasAlreadyPassed(LocalDateTime termin) {
+        LocalDateTime localDateTime = LocalDateTime.now();
+
+        if(localDateTime.getDayOfYear() == termin.plusDays(1).getDayOfYear() &&
+                localDateTime.getYear() == termin.plusDays(1).getYear()){
+            return  true;
+        }
+        return false;
+    }
+
+
+    @Scheduled(cron = "0 */1 * * * *") // Uruchamia co 24 godziny (przykładowy okres)
+    public void removeClientsWhoseDeadlineHasPassed() {
+
+        List<ClientEntity> clients = new ArrayList<>(clientRepository.findAll());
+
+
+
+        for (ClientEntity client : clients) {
+            if (checkIfTheAppointmentDateHasAlreadyPassed(client.getSelectedDate())) {
+                System.out.println("Usunałem klienta: " + client.getUniqueCode());
+                delete(client.getUniqueCode());
+            }
+        }
+
+
+
+    }
 
 
 }
