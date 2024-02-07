@@ -29,13 +29,14 @@ public class MakeupApplication {
 			ClientDto client2 = new ClientDto("Anna1", "668529552", LocalDateTime.now().plusHours(23));
 			ClientDto client3 = new ClientDto("Anna2", "668529553", LocalDateTime.now().plusHours(30));
 			ClientDto client4 = new ClientDto("Anna1", "668529554", LocalDateTime.now());
-
+			ClientDto client5 = new ClientDto("Anna1", "668529554", LocalDateTime.now().minusHours(24));
 
 
 			clientService.save(client1);
 			clientService.save(client2);
 			clientService.save(client3);
 			clientService.save(client4);
+			clientService.save(client5);
 
 
 			System.out.println(clientService.getAllClients().toString());
