@@ -21,14 +21,14 @@ public class ClientService {
 
     private final ClientRepository clientRepository;
 
-    public List<ClientDto> getAllClients(){
+    public List<ClientDto> getAllClients() {
         return clientRepository.findAll()
                 .stream()
                 .map(ClientMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public ClientDto save (ClientDto clientDto){
+    public ClientDto save(ClientDto clientDto) {
 
         if (!checkIfTheDateIsAvailable(clientDto) || getAllClients().isEmpty()) {
             ClientDto clientToSave;
@@ -46,9 +46,10 @@ public class ClientService {
 
 
     }
-    public ClientDto update (ClientDto clientDto){
 
-        if (clientRepository.findClientByUniqueCode(clientDto.getUniqueCode())!=null){
+    public ClientDto update(ClientDto clientDto) {
+
+        if (clientRepository.findClientByUniqueCode(clientDto.getUniqueCode()) != null) {
 
 
             ClientEntity client = clientRepository.findClientByUniqueCode(clientDto.getUniqueCode());
@@ -57,14 +58,14 @@ public class ClientService {
             client.setSelectedDate(clientDto.getSelectedDate());
             clientRepository.save(client);
 
-        return ClientMapper.toDto(client);
+            return ClientMapper.toDto(client);
         }
 
         throw new EntityException(ExceptionMessages.CLIENT_ID_NOT_FOUND.getMessage());
     }
 
-    public void delete(String code){
-        if (clientRepository.findClientByUniqueCode(code)!=null){
+    public void delete(String code) {
+        if (clientRepository.findClientByUniqueCode(code) != null) {
             clientRepository.deleteClientByUniqueCode(code);
         } else {
             throw new EntityException(ExceptionMessages.CLIENT_ID_NOT_FOUND.getMessage());
@@ -73,23 +74,23 @@ public class ClientService {
 
     }
 
-    private String sendSmsAboutVisit(ClientDto clientDto){
+    private String sendSmsAboutVisit(ClientDto clientDto) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        return "Twoja wizyta została umowiona na " + clientDto.getSelectedDate().format(formatter) + " Twój numer klienta " + clientDto.getUniqueCode()+ " zachowaj go w celu zmiany danych";
+        return "Twoja wizyta została umowiona na " + clientDto.getSelectedDate().format(formatter) + " Twój numer klienta " + clientDto.getUniqueCode() + " zachowaj go w celu zmiany danych";
     }
 
-    private String remindAboutVisit(ClientDto clientDto){
+    private String remindAboutVisit(ClientDto clientDto) {
 
-        return "Przypominam o jutrzejszej wizycie, jeżeli nie możesz przyjsc, poinformuj o tym, podając swój indywidualny kod: "+ clientDto.getUniqueCode();
+        return "Przypominam o jutrzejszej wizycie, jeżeli nie możesz przyjsc, poinformuj o tym, podając swój indywidualny kod: " + clientDto.getUniqueCode();
     }
 
-    private boolean checkIfTheDateIsAvailable(ClientDto clientDto){
+    private boolean checkIfTheDateIsAvailable(ClientDto clientDto) {
 
-       return getAllClients().stream()
-                .anyMatch(c->c.getSelectedDate().equals(clientDto.getSelectedDate()));
+        return getAllClients().stream()
+                .anyMatch(c -> c.getSelectedDate().equals(clientDto.getSelectedDate()));
     }
 
-    @Scheduled(cron = "0 */1 * * * *") // Uruchamia co 24 godziny (przykładowy okres)
+    @Scheduled(cron = "0 */1 * * * *")
     public void checkClientsDates() {
         List<ClientEntity> clients = new ArrayList<>(clientRepository.findAll());
 
@@ -102,7 +103,7 @@ public class ClientService {
     }
 
 
-    private List<LocalDateTime> getDates(){
+    private List<LocalDateTime> getDates() {
         return clientRepository.findAll().stream()
                 .map(ClientEntity::getSelectedDate)
                 .collect(Collectors.toList());
@@ -111,9 +112,9 @@ public class ClientService {
     private boolean checkIfTheAppointmentIsTheNextDay(LocalDateTime termin) {
         LocalDateTime localDateTime = LocalDateTime.now();
 
-        if(localDateTime.getDayOfYear() == termin.minusDays(1).getDayOfYear() &&
-                localDateTime.getYear() == termin.minusDays(1).getYear()){
-            return  true;
+        if (localDateTime.getDayOfYear() == termin.minusDays(1).getDayOfYear() &&
+                localDateTime.getYear() == termin.minusDays(1).getYear()) {
+            return true;
         }
         return false;
     }
@@ -121,19 +122,18 @@ public class ClientService {
     private boolean checkIfTheAppointmentDateHasAlreadyPassed(LocalDateTime termin) {
         LocalDateTime localDateTime = LocalDateTime.now();
 
-        if(localDateTime.getDayOfYear() == termin.plusDays(1).getDayOfYear() &&
-                localDateTime.getYear() == termin.plusDays(1).getYear()){
-            return  true;
+        if (localDateTime.getDayOfYear() == termin.plusDays(1).getDayOfYear() &&
+                localDateTime.getYear() == termin.plusDays(1).getYear()) {
+            return true;
         }
         return false;
     }
 
 
-    @Scheduled(cron = "0 */1 * * * *") // Uruchamia co 24 godziny (przykładowy okres)
+    @Scheduled(cron = "0 */1 * * * *") //
     public void removeClientsWhoseDeadlineHasPassed() {
 
         List<ClientEntity> clients = new ArrayList<>(clientRepository.findAll());
-
 
 
         for (ClientEntity client : clients) {
@@ -142,7 +142,6 @@ public class ClientService {
                 delete(client.getUniqueCode());
             }
         }
-
 
 
     }

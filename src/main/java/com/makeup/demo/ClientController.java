@@ -13,7 +13,7 @@ public class ClientController {
     private final ClientService clientService;
 
     @GetMapping
-    public List<ClientDto> getClients(){
+    public List<ClientDto> getClients() {
         return clientService.getAllClients();
     }
 

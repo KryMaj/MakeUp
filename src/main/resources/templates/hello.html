@@ -78,6 +78,7 @@
             padding: 20px 0;
         }
 
+
     </style>
 </head>
 <body>
@@ -85,7 +86,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
         <a class="navbar-brand" href="#header">
-               <img th:src="@{/logo.png}" alt="Logo" style="max-height: 40px;">
+            <img th:src="@{/logo.png}" alt="Logo" style="max-height: 40px;">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
             <span class="navbar-toggler-icon"></span>
@@ -106,7 +107,8 @@
     </div>
 </nav>
 
-<header id="header" style="background: url('https://e6r6m5i7.rocketcdn.me/wp-content/uploads/2021/08/shutterstock_332182442-1024x683.jpg') center/cover no-repeat; color: #ffffff; text-align: center; padding: 150px 0; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+<header id="header"
+        style="background: url('https://e6r6m5i7.rocketcdn.me/wp-content/uploads/2021/08/shutterstock_332182442-1024x683.jpg') center/cover no-repeat; color: #ffffff; text-align: center; padding: 150px 0; display: flex; flex-direction: column; justify-content: center; align-items: center;">
     <div class="container">
         <h1>Sylwia Miller MakeUp</h1>
     </div>
@@ -172,16 +174,18 @@
 
                     <label style="color: 	#ffffff;">
                         Numer telefonu:
-                        <input type="text" th:field="*{phoneNumber}" placeholder="Wpisz numer telefonu" pattern="[0-9]{9}" required >
+                        <input type="text" th:field="*{phoneNumber}" placeholder="Wpisz numer telefonu"
+                               pattern="[0-9]{9}" required>
                     </label>
 
 
                     <label style="color: 	#ffffff;">
                         Termin:
-                        <input type="datetime-local" th:field="*{selectedDate}" class="flatpickr" placeholder="Wybierz termin" required>
+                        <input type="datetime-local" th:field="*{selectedDate}" class="flatpickr"
+                               placeholder="Wybierz termin" required>
                     </label>
 
-                    <button class="btn btn-dark" type="submit" >UMÓW</button>
+                    <button class="btn btn-dark" type="submit">UMÓW</button>
 
 
                     <div th:if="${error}" class="alert alert-danger fixed-top text-center" role="alert" id="errorAlert">
@@ -193,7 +197,7 @@
 </section>
 
 
-<section id="cash" >
+<section id="cash">
 
     <div class="container">
         <h2 class="text-center mb-4">Cennik</h2>
@@ -232,8 +236,6 @@
 </section>
 
 
-
-
 <footer class="py-5 bg-dark">
     <div class="container">
         <p class="m-0 text-center text-white">Copyright &copy; Sylwia Miller <span
@@ -247,7 +249,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
-
 <script th:if="${success}">
     document.addEventListener('DOMContentLoaded', function () {
         Swal.fire({
@@ -256,6 +257,7 @@
             text: 'Pomyślnie zapisano!',
         });
     });
+
 </script>
 
 
@@ -267,6 +269,7 @@
         }
 
     }, 5000);
+
 </script>
 
 <script>
@@ -282,6 +285,7 @@
                 firstDayOfWeek: 1,
             },
         });
+
 
 </script>
 
