@@ -47,6 +47,10 @@ public class ClientService {
 
     }
     public ClientDto update (ClientDto clientDto){
+
+        if (clientRepository.findClientByUniqueCode(clientDto.getUniqueCode())!=null){
+
+
             ClientEntity client = clientRepository.findClientByUniqueCode(clientDto.getUniqueCode());
             client.setName(clientDto.getName());
             client.setPhoneNumber(clientDto.getPhoneNumber());
@@ -54,10 +58,18 @@ public class ClientService {
             clientRepository.save(client);
 
         return ClientMapper.toDto(client);
+        }
+
+        throw new EntityException(ExceptionMessages.CLIENT_ID_NOT_FOUND.getMessage());
     }
 
     public void delete(String code){
-        clientRepository.deleteClientByUniqueCode(code);
+        if (clientRepository.findClientByUniqueCode(code)!=null){
+            clientRepository.deleteClientByUniqueCode(code);
+        } else {
+            throw new EntityException(ExceptionMessages.CLIENT_ID_NOT_FOUND.getMessage());
+        }
+
 
     }
 

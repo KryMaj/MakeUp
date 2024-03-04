@@ -1,4 +1,4 @@
-`<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -7,6 +7,8 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
         body {
             padding-top: 56px;
@@ -107,8 +109,6 @@
 <header id="header" style="background: url('https://e6r6m5i7.rocketcdn.me/wp-content/uploads/2021/08/shutterstock_332182442-1024x683.jpg') center/cover no-repeat; color: #ffffff; text-align: center; padding: 150px 0; display: flex; flex-direction: column; justify-content: center; align-items: center;">
     <div class="container">
         <h1>Sylwia Miller MakeUp</h1>
-        <!--        <p class="lead">Twój opis nagłówka może być tutaj.</p>-->
-        <!--        <a class="btn btn-light btn-lg" href="#about">Przewiń w dół</a>-->
     </div>
 </header>
 
@@ -164,7 +164,7 @@
             <div class="col-lg-8 mx-auto">
                 <h1 style="color: 	#ffffff;">Umów wizytę</h1>
 
-                <form method="post" th:action="@{/client2}" th:object="${clientDto}">
+                <form method="post" th:action="@{/client2/hello}" th:object="${clientDto}">
                     <label style="color: 	#ffffff;">
                         Imię i Nazwisko:
                         <input type="text" th:field="*{name}" placeholder="Wpisz imię i nazwisko" required>
@@ -181,10 +181,9 @@
                         <input type="datetime-local" th:field="*{selectedDate}" class="flatpickr" placeholder="Wybierz termin" required>
                     </label>
 
-                    <button class="btn btn-dark" type="submit">UMÓW</button>
-                    <div  th:if="${info}" class="alert alert-success fixed-top text-center" role="alert" id="infoAlert" >
-                        <p th:text="${info}"></p>
-                    </div>
+                    <button class="btn btn-dark" type="submit" >UMÓW</button>
+
+
                     <div th:if="${error}" class="alert alert-danger fixed-top text-center" role="alert" id="errorAlert">
                         <p th:text="${error}"></p>
                     </div>
@@ -192,6 +191,7 @@
         </div>
     </div>
 </section>
+
 
 <section id="cash" >
 
@@ -246,19 +246,28 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+
+
+<script th:if="${success}">
+    document.addEventListener('DOMContentLoaded', function () {
+        Swal.fire({
+            icon: 'success',
+            title: 'Sukces!',
+            text: 'Pomyślnie zapisano!',
+        });
+    });
+</script>
+
+
 <script>
+    setTimeout(function() {
+        var errorAlert = document.getElementById('errorAlert');
+        if (errorAlert) {
+            errorAlert.style.display = 'none';
+        }
 
-        setTimeout(function() {
-        document.getElementById('errorAlert').style.display = 'none';
-        }, 5000);
-    </script>
-
-<script>
-
-        setTimeout(function() {
-                document.getElementById('infoAlert').style.display = 'none';
-        }, 5000);
-    </script>
+    }, 5000);
+</script>
 
 <script>
         flatpickr('.flatpickr', {
@@ -269,8 +278,13 @@
             maxDate: "01.01.2026",
             hourIncrement: 2,
             minuteIncrement: 60,
+             locale: {
+                firstDayOfWeek: 1,
+            },
         });
 
 </script>
+
+
 </body>
 </html>`

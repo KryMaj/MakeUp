@@ -27,7 +27,7 @@ public class MakeupApplication {
 
 			ClientDto client1 = new ClientDto("Anna", "668529559", LocalDateTime.now().plusHours(5));
 			ClientDto client2 = new ClientDto("Anna1", "668529552", LocalDateTime.now().plusHours(23));
-			ClientDto client3 = new ClientDto("Anna2", "668529553", LocalDateTime.now().plusHours(30));
+			ClientDto client3 = new ClientDto("Anna2", "668529553", LocalDateTime.now().plusHours(60));
 			ClientDto client4 = new ClientDto("Anna1", "668529554", LocalDateTime.now());
 			ClientDto client5 = new ClientDto("Anna1", "668529554", LocalDateTime.now().minusHours(24));
 

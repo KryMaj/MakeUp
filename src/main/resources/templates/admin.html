@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+
+         body {
+            padding-top: 56px;
+        }
+
+        .navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: #ffffff;
+        }
+
+        .navbar-dark .navbar-toggler-icon {
+            background-color: #ffffff;
+        }
+
+        header {
+            color: #ffffff;
+            text-align: center;
+            padding: 150px 0;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        section {
+            padding: 60px 0;
+        }
+
+        .parallax {
+            background: url('https://e6r6m5i7.rocketcdn.me/wp-content/uploads/2021/08/shutterstock_332182442-1024x683.jpg') center/cover no-repeat;
+            color: #ffffff;
+            text-align: center;
+            padding: 150px 0;
+        }
+
+             table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        th {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        tr:hover {
+            background-color: #e9ecef;
+        }
+
+        .footer {
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 20px 0;
+
+
+        }
+
+    .event-dot {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: red;
+      top: 5px;
+      right: 5px;
+    }
+    .flatpickr-day.has-events:not(.today) {
+      color: red;
+    }
+     .events-list {
+        margin-top: 20px; /* Odpowiada za odstęp między kalendarzem a tekstem */
+        text-align: left; /* Wyśrodkowanie tekstu po lewej stronie */
+        padding-left: 20px; /* Dodatkowe wyrównanie tekstu od lewej strony */
+        color: #000000;
+    }
+
+
+  </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <script>
+    function clearForm() {
+    document.getElementById("clientForm").reset();
+}
+
+</script>
+
+   <script>
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+      fetch('http://localhost:8180/client')
+        .then(response => response.json())
+        .then(data => {
+          const events = data.map(item => ({
+            title: item.name,
+            start: new Date(fixDate(item.selectedDate)),
+            phoneNumber: item.phoneNumber,
+            time: new Date(fixDate(item.selectedDate)).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}),
+            uniqueCode: item.uniqueCode
+          }));
+
+          const calendar = flatpickr("#calendar", {
+            inline: true,
+            onChange: onSelectDate,
+            time_24hr: true,
+            minDate: "today",
+            maxDate: "01.01.2026",
+            locale: {
+                firstDayOfWeek: 1,
+            },
+            events: events,
+            onReady: function(selectedDates, dateStr, instance) {
+              selectedDates.forEach(selectedDate => {
+                const formattedDate = selectedDate.toISOString().split('T')[0];
+                const calendarDay = document.querySelector(`[data-date="${formattedDate}"]`);
+                if (calendarDay) {
+                  calendarDay.classList.add('has-events');
+                }
+              });
+            }
+          });
+
+
+
+          function onSelectDate(selectedDates, dateStr, instance) {
+            const selectedDate = selectedDates[0];
+            const formattedDate = selectedDate.toISOString().split('T')[0];
+            const eventsForSelectedDate = events.filter(event => event.start.toISOString().split('T')[0] === formattedDate);
+            const eventsListContainer = document.getElementById('events-list');
+            eventsListContainer.innerHTML = '';
+
+            if (eventsForSelectedDate.length > 0) {
+              const eventsList = document.createElement('ul');
+              eventsForSelectedDate.forEach(event => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${event.title}, ${event.phoneNumber}, godzina: ${event.time} (${event.uniqueCode})`;
+                eventsList.appendChild(listItem);
+              });
+              eventsListContainer.appendChild(eventsList);
+            } else {
+              eventsListContainer.textContent = 'Brak zapisanych osób na ten dzień.';
+            }
+          }
+
+
+          function fixDate(dateString) {
+            const date = new Date(dateString);
+            date.setDate(date.getDate() - 1);
+            return date;
+          }
+        })
+        .catch(error => console.error('Błąd podczas pobierania danych:', error));
+    });
+  </script>
+
+    <script>
+        function submitForm(event) {
+        event.preventDefault();
+
+        var form = event.target;
+        var formData = new FormData(form);
+
+
+        fetch(form.action, {
+            method: form.method,
+            body: formData
+        })
+      .then(() => {
+    clearForm(); // Wywołanie funkcji czyszczącej formularz
+    location.reload(); // Odświeżenie strony
+})
+.catch(error => console.error('Błąd podczas zapisywania klienta:', error));
+    }
+
+
+  </script>
+
+
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const calendarInput =  document.querySelectorAll('.flatpickr, .flatpickr2');
+
+
+        flatpickr(calendarInput, {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            minDate: "today",
+            maxDate: "01.01.2026",
+            hourIncrement: 2,
+            minuteIncrement: 60,
+            locale: {
+                firstDayOfWeek: 1,
+            },
+            inline: false
+        });
+    });
+
+
+
+</script>
+
+
+<!--    <script>-->
+<!--    document.addEventListener('DOMContentLoaded', function() {-->
+<!--        const calendarInput = document.querySelector('.flatpickr2');-->
+
+
+<!--        flatpickr(calendarInput, {-->
+<!--            enableTime: true,-->
+<!--            dateFormat: "Y-m-d H:i",-->
+<!--            minDate: "today",-->
+<!--            maxDate: "01.01.2026",-->
+<!--            hourIncrement: 2,-->
+<!--            minuteIncrement: 60,-->
+<!--            locale: {-->
+<!--                firstDayOfWeek: 1,-->
+<!--            },-->
+<!--            inline: false-->
+<!--        });-->
+<!--    });-->
+
+
+
+<!--</script>-->
+
+    <script>
+
+   setTimeout(function() {
+    if (document.getElementById('errorAlert')) {
+        document.getElementById('errorAlert').style.display = 'none';
+    }
+     if (document.getElementById('errorAlert2')) {
+        document.getElementById('errorAlert2').style.display = 'none';
+    }
+      if (document.getElementById('errorAlert3')) {
+        document.getElementById('errorAlert3').style.display = 'none';
+    }
+}, 5000);
+    </script>
+
+
+
+    <script th:if="${success}">
+    document.addEventListener('DOMContentLoaded', function () {
+        Swal.fire({
+            icon: 'success',
+            title: 'Sukces!',
+            text: 'Pomyślnie zapisano klienta!',
+        });
+    });
+</script>
+
+
+    <script th:if="${successEdit}">
+    document.addEventListener('DOMContentLoaded', function () {
+        Swal.fire({
+            icon: 'success',
+            title: 'Sukces!',
+            text: 'Pomyślnie zmieniono dane klienta!',
+        });
+    });
+</script>
+
+
+    <script th:if="${successDelete}">
+    document.addEventListener('DOMContentLoaded', function () {
+        Swal.fire({
+            icon: 'success',
+            title: 'Sukces!',
+            text: 'Pomyślnie usunięto klienta!',
+        });
+    });
+</script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#header">
+            <img th:src="@{/logo.png}" alt="Logo" style="max-height: 40px;">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#calendar">Kalendarz</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Umów wizytę</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#delete">Usuń wizytę</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#edit">Edytuj wizytę</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<header id="header"  style="text-align: center;">
+    <div class="container" style="margin: auto;">
+        <h1 style="color: 	#000000;">Kalendarz</h1>
+        <input type="text" id="calendar" style="display: block; margin: 0 auto;">
+
+        <div id="events-list" class="events-list"></div>
+    </div>
+</header>
+
+<section id="contact" class="parallax">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h1 style="color: 	#ffffff;">Umów wizytę</h1>
+
+
+
+                <form id="clientForm" method="post" th:action="@{admin}" th:object="${clientDto}">
+                    <label style="color: 	#ffffff;">
+                        Imię i Nazwisko:
+                        <input type="text" th:field="*{name}" placeholder="Wpisz imię i nazwisko" required>
+                    </label>
+
+                    <label style="color: 	#ffffff;">
+                        Numer telefonu:
+                        <input type="text" th:field="*{phoneNumber}" placeholder="Wpisz numer telefonu" pattern="[0-9]{9}" required >
+                    </label>
+
+
+                    <label style="color: 	#ffffff;">
+                        Termin:
+                        <input type="datetime-local" th:field="*{selectedDate}" class="flatpickr" placeholder="Wybierz termin" required>
+                    </label>
+
+                    <button class="btn btn-dark" type="submit">UMÓW</button>
+
+
+                    <div th:if="${error2}" class="alert alert-danger fixed-top text-center" role="alert" id="errorAlert">
+                        <p th:text="${error2}"></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+
+<section id="delete" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 style="color: 	#000000;">Usuń klienta</h1>
+
+
+
+                <form  method="post" th:action="@{delete/code}"th:object="${clientDto}">
+
+                    <label style="color: 	#ffffff;">
+                        Kod klienta:
+                        <input type="text" th:field="*{uniqueCode}" placeholder="Wpisz unikalny kod" required>
+
+                    </label>
+                    <button class="btn btn-dark" type="submit">USUŃ</button>
+
+                    <div th:if="${error3}" class="alert alert-danger fixed-top text-center" role="alert" id="errorAlert3">
+                        <p th:text="${error3}"></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+
+
+
+<section id="edit" class="parallax">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h1 style="color: 	#ffffff;">Zmień dane klienta</h1>
+
+
+
+                <form id="clientForm2" method="post" th:action="@{admin/code}" th:object="${clientDto}">
+
+                    <label style="color: 	#ffffff;">
+                        Kod klienta:
+                        <input type="text" th:field="*{uniqueCode}" placeholder="Wpisz unikalny kod" required>
+                    </label>
+
+                    <label style="color: 	#ffffff;">
+                        Imię i Nazwisko:
+                        <input type="text" th:field="*{name}" placeholder="Wpisz imię i nazwisko" required>
+                    </label>
+
+                    <label style="color: 	#ffffff;">
+                        Numer telefonu:
+                        <input type="text" th:field="*{phoneNumber}" placeholder="Wpisz numer telefonu" pattern="[0-9]{9}" required >
+                    </label>
+
+
+                    <label style="color: 	#ffffff;">
+                        Termin:
+                        <input type="datetime-local" th:field="*{selectedDate}" class="flatpickr2" placeholder="Wybierz termin" required>
+                    </label>
+
+
+
+                    <button class="btn btn-dark" type="submit">ZMIEŃ</button>
+
+                    <div th:if="${error2}" class="alert alert-danger fixed-top text-center" role="alert" id="errorAlert2">
+                        <p th:text="${error2}"></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Sylwia Miller <span
+                th:text="${#dates.year(#dates.createNow())}"></span></p>
+    </div>
+</footer>
+
+
+
+
+
+
+
+</body>
+</html>
