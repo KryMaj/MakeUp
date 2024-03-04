@@ -98,7 +98,8 @@
     }
 
 
-  </style>
+
+    </style>
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
@@ -107,9 +108,10 @@
     document.getElementById("clientForm").reset();
 }
 
-</script>
 
-   <script>
+    </script>
+
+    <script>
 
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -176,7 +178,8 @@
         })
         .catch(error => console.error('Błąd podczas pobierania danych:', error));
     });
-  </script>
+
+    </script>
 
     <script>
         function submitForm(event) {
@@ -198,8 +201,8 @@
     }
 
 
-  </script>
 
+    </script>
 
 
     <script>
@@ -223,31 +226,10 @@
 
 
 
-</script>
+
+    </script>
 
 
-<!--    <script>-->
-<!--    document.addEventListener('DOMContentLoaded', function() {-->
-<!--        const calendarInput = document.querySelector('.flatpickr2');-->
-
-
-<!--        flatpickr(calendarInput, {-->
-<!--            enableTime: true,-->
-<!--            dateFormat: "Y-m-d H:i",-->
-<!--            minDate: "today",-->
-<!--            maxDate: "01.01.2026",-->
-<!--            hourIncrement: 2,-->
-<!--            minuteIncrement: 60,-->
-<!--            locale: {-->
-<!--                firstDayOfWeek: 1,-->
-<!--            },-->
-<!--            inline: false-->
-<!--        });-->
-<!--    });-->
-
-
-
-<!--</script>-->
 
     <script>
 
@@ -262,8 +244,8 @@
         document.getElementById('errorAlert3').style.display = 'none';
     }
 }, 5000);
-    </script>
 
+    </script>
 
 
     <script th:if="${success}">
@@ -274,7 +256,8 @@
             text: 'Pomyślnie zapisano klienta!',
         });
     });
-</script>
+
+    </script>
 
 
     <script th:if="${successEdit}">
@@ -285,7 +268,8 @@
             text: 'Pomyślnie zmieniono dane klienta!',
         });
     });
-</script>
+
+    </script>
 
 
     <script th:if="${successDelete}">
@@ -296,7 +280,8 @@
             text: 'Pomyślnie usunięto klienta!',
         });
     });
-</script>
+
+    </script>
 
 </head>
 <body>
@@ -328,7 +313,7 @@
     </div>
 </nav>
 
-<header id="header"  style="text-align: center;">
+<header id="header" style="text-align: center;">
     <div class="container" style="margin: auto;">
         <h1 style="color: 	#000000;">Kalendarz</h1>
         <input type="text" id="calendar" style="display: block; margin: 0 auto;">
@@ -344,7 +329,6 @@
                 <h1 style="color: 	#ffffff;">Umów wizytę</h1>
 
 
-
                 <form id="clientForm" method="post" th:action="@{admin}" th:object="${clientDto}">
                     <label style="color: 	#ffffff;">
                         Imię i Nazwisko:
@@ -353,19 +337,22 @@
 
                     <label style="color: 	#ffffff;">
                         Numer telefonu:
-                        <input type="text" th:field="*{phoneNumber}" placeholder="Wpisz numer telefonu" pattern="[0-9]{9}" required >
+                        <input type="text" th:field="*{phoneNumber}" placeholder="Wpisz numer telefonu"
+                               pattern="[0-9]{9}" required>
                     </label>
 
 
                     <label style="color: 	#ffffff;">
                         Termin:
-                        <input type="datetime-local" th:field="*{selectedDate}" class="flatpickr" placeholder="Wybierz termin" required>
+                        <input type="datetime-local" th:field="*{selectedDate}" class="flatpickr"
+                               placeholder="Wybierz termin" required>
                     </label>
 
                     <button class="btn btn-dark" type="submit">UMÓW</button>
 
 
-                    <div th:if="${error2}" class="alert alert-danger fixed-top text-center" role="alert" id="errorAlert">
+                    <div th:if="${error2}" class="alert alert-danger fixed-top text-center" role="alert"
+                         id="errorAlert">
                         <p th:text="${error2}"></p>
                     </div>
                 </form>
@@ -376,16 +363,14 @@
 </section>
 
 
-
-<section id="delete" >
+<section id="delete">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto text-center">
                 <h1 style="color: 	#000000;">Usuń klienta</h1>
 
 
-
-                <form  method="post" th:action="@{delete/code}"th:object="${clientDto}">
+                <form method="post" th:action="@{delete/code}" th:object="${clientDto}">
 
                     <label style="color: 	#ffffff;">
                         Kod klienta:
@@ -394,7 +379,8 @@
                     </label>
                     <button class="btn btn-dark" type="submit">USUŃ</button>
 
-                    <div th:if="${error3}" class="alert alert-danger fixed-top text-center" role="alert" id="errorAlert3">
+                    <div th:if="${error3}" class="alert alert-danger fixed-top text-center" role="alert"
+                         id="errorAlert3">
                         <p th:text="${error3}"></p>
                     </div>
                 </form>
@@ -405,15 +391,11 @@
 </section>
 
 
-
-
-
 <section id="edit" class="parallax">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto">
                 <h1 style="color: 	#ffffff;">Zmień dane klienta</h1>
-
 
 
                 <form id="clientForm2" method="post" th:action="@{admin/code}" th:object="${clientDto}">
@@ -430,20 +412,22 @@
 
                     <label style="color: 	#ffffff;">
                         Numer telefonu:
-                        <input type="text" th:field="*{phoneNumber}" placeholder="Wpisz numer telefonu" pattern="[0-9]{9}" required >
+                        <input type="text" th:field="*{phoneNumber}" placeholder="Wpisz numer telefonu"
+                               pattern="[0-9]{9}" required>
                     </label>
 
 
                     <label style="color: 	#ffffff;">
                         Termin:
-                        <input type="datetime-local" th:field="*{selectedDate}" class="flatpickr2" placeholder="Wybierz termin" required>
+                        <input type="datetime-local" th:field="*{selectedDate}" class="flatpickr2"
+                               placeholder="Wybierz termin" required>
                     </label>
-
 
 
                     <button class="btn btn-dark" type="submit">ZMIEŃ</button>
 
-                    <div th:if="${error2}" class="alert alert-danger fixed-top text-center" role="alert" id="errorAlert2">
+                    <div th:if="${error2}" class="alert alert-danger fixed-top text-center" role="alert"
+                         id="errorAlert2">
                         <p th:text="${error2}"></p>
                     </div>
                 </form>
@@ -460,11 +444,6 @@
                 th:text="${#dates.year(#dates.createNow())}"></span></p>
     </div>
 </footer>
-
-
-
-
-
 
 
 </body>
