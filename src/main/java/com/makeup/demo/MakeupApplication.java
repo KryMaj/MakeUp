@@ -43,11 +43,6 @@ public class MakeupApplication {
             System.out.println(clientService.getAllClients().toString());
 
 
-//			ClientDto clientDto = new ClientDto("Anna", "656466", LocalDateTime.now(), client1.getUniqueCode());
-//			clientService.update(clientDto);
-//
-//			clientService.delete(client2.getUniqueCode());
-
 
         };
     }
