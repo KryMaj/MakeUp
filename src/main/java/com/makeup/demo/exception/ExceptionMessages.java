@@ -7,7 +7,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ExceptionMessages {
 
-    ENTITY_NOT_FOUND("Podana godzina jest już niedostępna, proszę wybrać inną");
+    ENTITY_NOT_FOUND("Podana godzina jest już niedostępna, proszę wybrać inną"),
+    CLIENT_ID_NOT_FOUND("Nie istnieje klient o takim kodzie, zweryfikuj to");
 
 
     private final String message;
