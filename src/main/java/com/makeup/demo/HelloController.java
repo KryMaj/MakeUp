@@ -2,11 +2,14 @@ package com.makeup.demo;
 
 import com.makeup.demo.exception.EntityException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @RequestMapping("client2")
 @Controller
@@ -15,6 +18,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class HelloController {
 
     private final ClientService clientService;
+
+
 
 
     @GetMapping("/hello")
@@ -36,6 +41,10 @@ public class HelloController {
         }
 
     }
+//    @GetMapping("/admin2")
+//    public List<ClientDto> getClients() {
+//        return clientService.getAllClients();
+//    }
 
 
     @GetMapping("/admin")
@@ -43,6 +52,12 @@ public class HelloController {
         model.addAttribute("clientDto2", clientDto);
 
         return "admin";
+    }
+
+    @GetMapping("/hello/get")
+    @ResponseBody
+    public List<ClientDto> getClients() {
+        return clientService.getAllClients();
     }
 
 
