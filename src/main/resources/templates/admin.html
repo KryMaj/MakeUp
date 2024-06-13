@@ -115,7 +115,7 @@
 
 
     document.addEventListener('DOMContentLoaded', function() {
-      fetch('http://localhost:8180/client')
+      fetch('http://localhost:8180/client2/hello/get')
         .then(response => response.json())
         .then(data => {
           const events = data.map(item => ({
