@@ -41,10 +41,6 @@ public class HelloController {
         }
 
     }
-//    @GetMapping("/admin2")
-//    public List<ClientDto> getClients() {
-//        return clientService.getAllClients();
-//    }
 
 
     @GetMapping("/admin")
